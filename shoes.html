@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -21,8 +22,8 @@
 
 		firebase.initializeApp(config);
 		var db = firebase.firestore();
-		var auth = firebase.auth() ;
-		var storageRef = firebase.storage().ref() ;
+		var auth = firebase.auth();
+		var storageRef = firebase.storage().ref();
 	</script>
 
 
@@ -32,21 +33,21 @@
 	<meta name="keywords" content="divisima, eCommerce, creative, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->
-	<link href="img/favicon.ico" rel="shortcut icon"/>
+	<link href="img/favicon.ico" rel="shortcut icon" />
 
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/flaticon.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
-	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/animate.css"/>
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/flaticon.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
+	<link rel="stylesheet" href="css/jquery-ui.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -58,28 +59,28 @@
 
 		function shopkeeper() {
 			$("#shop_button").css('visibility', 'visible')
-					.click( function () {
-						window.location.replace("shopkeeper.html") ;
-					})
+				.click(function () {
+					window.location.replace("shopkeeper.html");
+				})
 		}
 
 		function customer() {
 			$("#cust_button").css('visibility', 'visible')
-					.click(function () {
-						window.location.replace("customer.html") ;
-					})
+				.click(function () {
+					window.location.replace("customer.html");
+				})
 		}
 
-		function delivery(){
+		function delivery() {
 			$("#delivery_button").css('visibility', 'visible')
-					.click(function () {
-						window.location.replace("delivery.html") ;
-					})
+				.click(function () {
+					window.location.replace("delivery.html");
+				})
 		}
 
-		function check(){
-			auth.onAuthStateChanged(function (user){
-				if(user) {
+		function check() {
+			auth.onAuthStateChanged(function (user) {
+				if (user) {
 					const id = user.uid;
 
 					localStorage.setItem("current_user", id);
@@ -117,33 +118,33 @@
 						});
 					});
 				}
-				else{
-					console.log("no user") ;
+				else {
+					console.log("no user");
 				}
 			});
 		}
 	</script>
 
 	<script>
-        function changes(id){
-        	//alert("id" +id) ;
-            localStorage.setItem("id",id) ;
-            window.location.replace("product.html") ;
-        }
+		function changes(id) {
+			//alert("id" +id) ;
+			localStorage.setItem("id", id);
+			window.location.replace("product.html");
+		}
 
 		function createCard(cardData) {
 			var cardTemplate = [
 				'<div class="col-lg-4 col-sm-6" style="margin-bottom: 80px">',
-					'<div class="product-item">',
-					'<div class="card" style="border: 0; height: 399px">',
-						'<div class="pi-pic">',
-							'<img width = "330px" height= "411px" src=' + cardData.image+'>',
-						'</div>',
-					'<div class="pi-text">',
-						'<h6>&#8377;'+cardData.price +'</h6>',
-							'<a href="#" onclick="changes('+"'"+cardData.id+"'"+')">'+cardData.Name+'</a>',
-						'</div>',
-					'</div>',
+				'<div class="product-item">',
+				'<div class="card" style="border: 0; height: 399px">',
+				'<div class="pi-pic">',
+				'<img width = "330px" height= "411px" src=' + cardData.image + '>',
+				'</div>',
+				'<div class="pi-text">',
+				'<h6>&#8377;' + cardData.price + '</h6>',
+				'<a href="#" onclick="changes(' + "'" + cardData.id + "'" + ')">' + cardData.Name + '</a>',
+				'</div>',
+				'</div>',
 				'</div>'
 
 			];
@@ -154,14 +155,14 @@
 		var data = [];
 
 		$(document).ready(
-		    function fetch() {
-			var test ;
-			db.collection('products').where("type","==","shoes").get().then(function (snapshot) { // type= shoes
-				snapshot.docs.forEach(function (doc) {
-					storageRef.child(doc.id+'/'+doc.data().fileName)
+			function fetch() {
+				var test;
+				db.collection('products').where("type", "==", "shoes").get().then(function (snapshot) { // type= shoes
+					snapshot.docs.forEach(function (doc) {
+						storageRef.child(doc.id + '/' + doc.data().fileName)
 							.getDownloadURL()
-							.then(function(url) {
-								test = url.toString() ;
+							.then(function (url) {
+								test = url.toString();
 								var prod = {
 									id: doc.id,
 									Name: doc.data().name,
@@ -169,33 +170,34 @@
 									image: test
 								};
 								$('#products').append(
-										createCard(prod)
-								) ;
-								data.push(prod) ;
-								console.log(data) ;
+									createCard(prod)
+								);
+								data.push(prod);
+								console.log(data);
 							}).catch(function (error) {
-								console.log(error) ;
+								console.log(error);
 							});
-				})
+					})
+				});
+				display();
 			});
-			display();
-		});
 
 		var cards = $();
 		// Store all the card nodes
-		data.forEach(function(item, i) {
+		data.forEach(function (item, i) {
 			cards = cards.add(createCard(item));
 		});
 
 		// Add them to the page... for instance the <body>
 		function display() {
-			$('#products').append(cards) ;
+			$('#products').append(cards);
 		}
 
 	</script>
 
 
 </head>
+
 <body onload="check()">
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -210,8 +212,8 @@
 				<div class="row">
 					<div class="col-lg-2 text-center text-lg-left">
 						<a href="./index.html" class="site-logo">
-    <img src="./logo.png" alt="LOCO" style="max-height: 50px;">
-</a>
+							<img src="./logo.png" alt="LOCO" style="max-height: 50px;">
+						</a>
 					</div>
 					<div class="col-xl-5 col-lg-4">
 						<form class="header-search-form">
@@ -223,7 +225,8 @@
 						<div class="user-panel">
 							<div class="up-item">
 								<i class="flaticon-profile"></i>
-								<a href="Login.html" id="login">Sign In </a><a href="index.html" id="logout" style="visibility: hidden">Sign Out </a>or <a href="SignUp.html">Create Account</a>
+								<a href="Login.html" id="login">Sign In </a><a href="index.html" id="logout"
+									style="visibility: hidden">Sign Out </a>or <a href="SignUp.html">Create Account</a>
 							</div>
 							<div class="up-item">
 								<div class="shopping-card">
@@ -234,7 +237,8 @@
 							<div class="up-item">
 								<a href="#" id="cust_button" style="visibility: hidden">&ensp; Profile </a>
 								<a href="shopkeeper.html" id="shop_button" style="visibility: hidden">Shopkeeper</a>
-								<a href="delivery.html" id="delivery_button" style="visibility: hidden">&ensp; delivery</a>
+								<a href="delivery.html" id="delivery_button" style="visibility: hidden">&ensp;
+									delivery</a>
 							</div>
 						</div>
 					</div>
@@ -252,7 +256,7 @@
 					</li>
 					<li><a href="cart.html">Cart</a>
 					</li>
-<li><a href="#">Pages</a>
+					<li><a href="#">Pages</a>
 						<ul class="sub-menu">
 							<li><a href="./product.html">Product Page</a></li>
 							<li><a href="./category.html">Category Page</a></li>
@@ -313,7 +317,8 @@
 									<li><a href="#">Midi Dresses <span>(2)</span></a></li>
 									<li><a href="#">Maxi Dresses<span>(56)</span></a></li>
 									<li><a href="#">Prom Dresses<span>(36)</span></a></li>
-								</ul></li>
+								</ul>
+							</li>
 							<li><a href="#">Children</a></li>
 							<li><a href="#">Bags & Purses</a></li>
 							<li><a href="#">Eyewear</a></li>
@@ -324,19 +329,23 @@
 						<h2 class="fw-title">refine by</h2>
 						<div class="price-range-wrap">
 							<h4>Price</h4>
-                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="270">
-								<div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div>
-								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;">
+							<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+								data-min="10" data-max="270">
+								<div class="ui-slider-range ui-corner-all ui-widget-header"
+									style="left: 0%; width: 100%;"></div>
+								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"
+									style="left: 0%;">
 								</span>
-								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;">
+								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"
+									style="left: 100%;">
 								</span>
 							</div>
 							<div class="range-slider">
-                                <div class="price-input">
-                                    <input type="text" id="minamount">
-                                    <input type="text" id="maxamount"><br><br>
-                                </div>
-                            </div>
+								<div class="price-input">
+									<input type="text" id="minamount">
+									<input type="text" id="maxamount"><br><br>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="filter-widget mb-0">
@@ -347,7 +356,7 @@
 								<label for="s-size">S</label>
 							</div>
 							<div class="sc-item">
-								<input type="radio" name="sc" id="m-size"  checked="">
+								<input type="radio" name="sc" id="m-size" checked="">
 								<label for="m-size">M</label>
 							</div>
 							<div class="sc-item">
@@ -565,8 +574,8 @@
 				</div>
 				-->
 
-			</div>
-		</div>
+					</div>
+				</div>
 	</section>
 	<!-- Category section end -->
 
@@ -610,7 +619,7 @@
 						<h2>Questions</h2>
 						<div class="fw-latest-post-widget">
 							<div class="lp-item">
-								
+
 								<div class="lp-content">
 									<h6>what shoes to wear</h6>
 									<span>Oct 21, 2018</span>
@@ -618,7 +627,7 @@
 								</div>
 							</div>
 							<div class="lp-item">
-								
+
 								<div class="lp-content">
 									<h6>trends this year</h6>
 									<span>Oct 21, 2018</span>
@@ -680,5 +689,6 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>
