@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
@@ -18,7 +19,7 @@
 
         firebase.initializeApp(config);
         var db = firebase.firestore();
-        var auth = firebase.auth() ;
+        var auth = firebase.auth();
 
     </script>
 
@@ -28,21 +29,21 @@
     <meta name="keywords" content="divisima, eCommerce, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="shortcut icon"/>
+    <link href="img/favicon.ico" rel="shortcut icon" />
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="css/flaticon.css"/>
-    <link rel="stylesheet" href="css/slicknav.min.css"/>
-    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="css/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="css/animate.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="css/slicknav.min.css" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
 
     <!--[if lt IE 9]>
@@ -54,28 +55,28 @@
 
         function shopkeeper() {
             $("#shop_button").css('visibility', 'visible')
-                .click( function () {
-                    window.location.replace("shopkeeper.html") ;
+                .click(function () {
+                    window.location.replace("shopkeeper.html");
                 })
         }
 
         function customer() {
             $("#cust_button").css('visibility', 'visible')
                 .click(function () {
-                    window.location.replace("customer.html") ;
+                    window.location.replace("customer.html");
                 })
         }
 
-        function delivery(){
+        function delivery() {
             $("#delivery_button").css('visibility', 'visible')
                 .click(function () {
-                    window.location.replace("delivery.html") ;
+                    window.location.replace("delivery.html");
                 })
         }
 
-        function check(){
-            auth.onAuthStateChanged(function (user){
-                if(user) {
+        function check() {
+            auth.onAuthStateChanged(function (user) {
+                if (user) {
                     const id = user.uid;
 
                     localStorage.setItem("current_user", id);
@@ -113,42 +114,42 @@
                         });
                     });
                 }
-                else{
-                    console.log("no user") ;
+                else {
+                    console.log("no user");
                 }
             });
         }
     </script>
 
-        <script>
-        var persons = [] ;
+    <script>
+        var persons = [];
 
         $(function () {
-            if(document.getElementById("area").selectedIndex == 0) {
-                db.collection("Delivery").where("area1","==",true).get()
+            if (document.getElementById("area").selectedIndex == 0) {
+                db.collection("Delivery").where("area1", "==", true).get()
                     .then(function (querySnapshot) {
                         querySnapshot.forEach(function (doc) {
-                            persons.push(doc.id) ;
+                            persons.push(doc.id);
                         });
                     }).catch(function (error) {
-                    console.log(error) ;
-                });
+                        console.log(error);
+                    });
 
             }
 
-            if(document.getElementById("area").selectedIndex ==1) {
-                db.collection("Delivery").where("area2","==",true).get().then(function (snapshot) {
+            if (document.getElementById("area").selectedIndex == 1) {
+                db.collection("Delivery").where("area2", "==", true).get().then(function (snapshot) {
                     snapshot.forEach(function (doc) {
-                        persons.push(doc.id) ;
+                        persons.push(doc.id);
                     })
                 }).catch(function (error) {
                     console.log(error);
                 });
             }
-            if(document.getElementById("area").selectedIndex == 2) {
-                db.collection("Delivery").where("area3","==",true).get().then(function (snapshot) {
+            if (document.getElementById("area").selectedIndex == 2) {
+                db.collection("Delivery").where("area3", "==", true).get().then(function (snapshot) {
                     snapshot.forEach(function (doc) {
-                        persons.push(doc.id) ;
+                        persons.push(doc.id);
                     })
                 }).catch(function (error) {
                     console.log(error);
@@ -206,93 +207,103 @@
             }
             else {
                 var storedData = localStorage.getItem("cart");
-                var items = [] ;
+                var items = [];
                 items = JSON.parse(storedData);
 
                 var address = document.forms["confirm"]["email"].value;
                 var name = document.forms["confirm"]["name"].value;
 
                 var names = [];
-                var prices =  [];
+                var prices = [];
 
-                for(var i=0;i<items.length;i++){
-                    names.push(items[i].name) ;
-                    prices.push(items[i].price) ;
+                for (var i = 0; i < items.length; i++) {
+                    names.push(items[i].name);
+                    prices.push(items[i].price);
                 }
 
-                if(Dperson == undefined){
-                    alert("order could not be placed") ;
+                if (Dperson == undefined) {
+                    alert("order could not be placed");
                 }
-                else{
-                db.collection("orders").add({
-                    user: id,
-                    products :names,
-                    address: address,
-                    prices: prices,
-                    CustomerName: name,
-                    dperson: Dperson,
-                    assigned : true,
-                }).then(function () {
-                    alert("order placed") ;
-                    window.location.replace("index.html") ;
-                }) ;
-                    }
+                else {
+                    db.collection("orders").add({
+                        user: id,
+                        products: names,
+                        address: address,
+                        prices: prices,
+                        CustomerName: name,
+                        dperson: Dperson,
+                        assigned: true,
+                    }).then(function () {
+                        alert("order placed");
+                        window.location.replace("index.html");
+                    });
                 }
+            }
         }
 
 
     </script>
 </head>
+
 <body onload="check()">
-<!-- Header section -->
-<header class="header-section">
-    <div class="header-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 text-center text-lg-left">
-                    <!-- logo -->
-                     <a href="./index.html" class="site-logo">
-                        <h3 style="padding-top: 20px; font-size: 24px;">Shopping Shine</h3>
-                    </a>
-                </div>
-                <div class="col-xl-5 col-lg-4">
-                    <form class="header-search-form">
-                        <input type="text" placeholder="Search on divisima ....">
-                        <button><i class="flaticon-search"></i></button>
-                    </form>
-                </div>
-                <div class="col-xl-5 col-lg-6">
-                    <div class="user-panel">
-                        <div class="up-item">
-                            <i class="flaticon-profile"></i>
-                            <a href="Login.html" id="login">Sign In </a><a href="index.html" id="logout" style="visibility: hidden">Sign Out </a>or <a href="SignUp.html">Create Account</a>
-                        </div>
-                        <div class="up-item">
-                            <div class="shopping-card">
-                                <i class="flaticon-bag"></i>
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 text-center text-lg-left">
+                        <!-- logo -->
+                        <a href="./index.html" class="site-logo">
+                            <h3 style="padding-top: 20px; font-size: 24px;">Shopping Shine</h3>
+                        </a>
+                    </div>
+                    <div class="col-xl-5 col-lg-4">
+                        <form class="header-search-form">
+                            <input type="text" placeholder="Search on divisima ....">
+                            <button><i class="flaticon-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-xl-5 col-lg-6">
+                        <div class="user-panel">
+                            <div class="up-item">
+                                <i class="flaticon-profile"></i>
+                                <a href="Login.html" id="login">Sign In </a><a href="index.html" id="logout"
+                                    style="visibility: hidden">Sign Out </a>or <a href="SignUp.html">Create Account</a>
                             </div>
-                            <a href="#">Shopping Cart</a>
-                        </div>
-                        <div class="up-item">
-                            <a href="#" id="cust_button" style="visibility: hidden">&ensp; Profile </a>
-                            <a href="shopkeeper.html" id="shop_button" style="visibility: hidden">Shopkeeper</a>
-                            <a href="delivery.html" id="delivery_button" style="visibility: hidden">&ensp; delivery</a>
+                            <div class="up-item">
+                                <div class="shopping-card">
+                                    <i class="flaticon-bag"></i>
+                                </div>
+                                <a href="#">Shopping Cart</a>
+                            </div>
+                            <div class="up-item">
+                                <a href="#" id="cust_button" style="visibility: hidden">&ensp; Profile </a>
+                                <a href="shopkeeper.html" id="shop_button" style="visibility: hidden">Shopkeeper</a>
+                                <a href="delivery.html" id="delivery_button" style="visibility: hidden">&ensp;
+                                    delivery</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <nav class="main-navbar">
-        <div class="container">
-            <!-- menu -->
-            <ul class="main-menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="women.html">Women</a></li>
-                <li><a href="men.html">Men</a></li>
-                <li><a href="shoes.html">Shoes</a>
-                </li>
-                <!--<li><a href="#">Pages</a>
+        <nav class="main-navbar">
+            <div class="container">
+                <!-- menu -->
+                <ul class="main-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="women.html">Women</a></li>
+                    <li><a href="men.html">Men</a></li>
+                    <li><a href="shoes.html">Shoes</a>
+                    <li><a href="https://bouchibawissa.blogspot.com/2025/05/mon-experience-avec-le-site-shein.html">Blog:
+                            Mon expérience SHEIN</a></li>
+                    <li><a href="https://bouchibawissa.blogspot.com/2025/05/top-5-conseils-pour-un-shopping-malin.html">Blog:
+                            Conseils shopping</a></li>
+                    <li><a href="https://bouchibawissa.blogspot.com/2025/05/comment-assortir-et-choisir-mes.html">Blog:
+                            Conseils assortiment</a></li>
+
+                    </li>
+                    <!--<li><a href="#">Pages</a>
                     <ul class="sub-menu">
                         <li><a href="./product.html">Product Page</a></li>
                         <li><a href="./category.html">Category Page</a></li>
@@ -302,74 +313,83 @@
                     </ul>
                 </li>
                 <li><a href="#">Blog</a></li> -->
-            </ul>
-        </div>
-    </nav>
-</header>
-<!-- Header section end -->
-<br><br>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Header section end -->
+    <br><br>
 
-<div class="pix_section pix-padding" id="section_forms_2" style="display: block;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-xs-12 col-sm-6 column ui-droppable">
-                <div class="pix-content">
-                    <h2 class="pix-black-gray-dark pix-no-margin-bottom">
-                        <span class="pix_edit_text">Our Address</span>
-                    </h2>
-                    <p class="pix-black-gray-light big-text pix-padding-bottom-20">
-                        <span class="pix_edit_text">tataouine Nord.<br><strong>3200</strong></span>
-                    </p>
-                    <div class="embed-responsive embed-responsive-4by3">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89083.20802621171!2d4.844302!3d45.754148!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1498852308813" width="940" height="350"></iframe>
-                    </div>
-                </div><br>
-                <div class="pix-content">
-                    <h2 class="pix-black-gray-dark pix-no-margin-bottom">
-                        <span class="pix_edit_text">Our phone number</span>
-                    </h2>
-                    <p class="pix-black-gray-light big-text pix-padding-bottom-20">
-                        <span class="pix_edit_text">+216 92777225<br><strong>Tunisia</strong></span>
-                    </p>
-                    <div class="embed-responsive embed-responsive-4by3">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89083.20802621171!2d4.844302!3d45.754148!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1498852308813" width="940" height="350"></iframe>
+    <div class="pix_section pix-padding" id="section_forms_2" style="display: block;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-6 column ui-droppable">
+                    <div class="pix-content">
+                        <h2 class="pix-black-gray-dark pix-no-margin-bottom">
+                            <span class="pix_edit_text">Our Address</span>
+                        </h2>
+                        <p class="pix-black-gray-light big-text pix-padding-bottom-20">
+                            <span class="pix_edit_text">tataouine Nord.<br><strong>3200</strong></span>
+                        </p>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89083.20802621171!2d4.844302!3d45.754148!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1498852308813"
+                                width="940" height="350"></iframe>
+                        </div>
+                    </div><br>
+                    <div class="pix-content">
+                        <h2 class="pix-black-gray-dark pix-no-margin-bottom">
+                            <span class="pix_edit_text">Our phone number</span>
+                        </h2>
+                        <p class="pix-black-gray-light big-text pix-padding-bottom-20">
+                            <span class="pix_edit_text">+216 92777225<br><strong>Tunisia</strong></span>
+                        </p>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89083.20802621171!2d4.844302!3d45.754148!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1498852308813"
+                                width="940" height="350"></iframe>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-xs-12 col-sm-6 column ui-droppable">
-                <div class="pix-content pix-radius-3">
-                    <h2 class="pix-black-gray-dark pix-no-margin-bottom">
-                        <span class="pix_edit_text">Confirm Order</span>
-                    </h2>
-                    <p class="pix-black-gray-light big-text pix-padding-bottom-20">
-                        <span class="pix_edit_text">please enter your details below</span>
-                    </p>
+                <div class="col-md-6 col-xs-12 col-sm-6 column ui-droppable">
+                    <div class="pix-content pix-radius-3">
+                        <h2 class="pix-black-gray-dark pix-no-margin-bottom">
+                            <span class="pix_edit_text">Confirm Order</span>
+                        </h2>
+                        <p class="pix-black-gray-light big-text pix-padding-bottom-20">
+                            <span class="pix_edit_text">please enter your details below</span>
+                        </p>
 
-                    <form class="pix-form-style pixfort-form ui-sortable" name="confirm">
-                        <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Enter Your Full Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="area">Select Area:</label>
-                            <select class="form-control" id="area" name="area">
-                                <option>option1</option>
-                                <option>option2</option>
-                                <option>option3</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="address" rows="5" placeholder="Enter your delivery Address"></textarea>
-                        </div>
-                        <button type="button" class="btn btn-primary pix-white btn-md small-text btn-block" onclick="placeOrder()"><span class="pix_edit_text"><strong>Confirm Order</strong></span></button>
-                    </form>
+                        <form class="pix-form-style pixfort-form ui-sortable" name="confirm">
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" placeholder="Enter Your Full Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                    name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="area">Select Area:</label>
+                                <select class="form-control" id="area" name="area">
+                                    <option>option1</option>
+                                    <option>option2</option>
+                                    <option>option3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="address" rows="5"
+                                    placeholder="Enter your delivery Address"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary pix-white btn-md small-text btn-block"
+                                onclick="placeOrder()"><span class="pix_edit_text"><strong>Confirm
+                                        Order</strong></span></button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>
